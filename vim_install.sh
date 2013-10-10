@@ -5,8 +5,8 @@ MSG=""
 VERBOSE=true
 SUCCESS=" executed successfully"
 FAIL=" problem in exeution"
-
-function clean_up {
+VIM_URL="https://github.com/b4winckler/vim.git"
+clean_up() {
 	rm -f ~/.vimrc
 	rm -f ~/.gvimrc 
 	rm -rf ~/vim 
@@ -14,7 +14,7 @@ function clean_up {
 	sudo apt-get install curl
 	sudo apt-get build-dep vim
 }
-function check_success {
+check_success() {
 	if [ ${?} -eq 0 ] 
 	then
 		OP=$MSG$SUCCESS
@@ -26,10 +26,10 @@ function check_success {
 	fi
 }
 #Install vim and curl
-function install_vim {
+install_vim() {
 
 	MSG="pulled vim source successfully" 
-	git clone https://github.com/b4winckler/vim.git vim
+	git_clone_task=`git clone ${VIM_URL} vim`
 	git pull
 	cd vim/src
 	check_success
@@ -47,7 +47,7 @@ function install_vim {
 
 
 
-function vim_plugin_update {
+vim_plugin_update() {
 
 	MSG="pathogen installtion"
 	#get the pathogen
@@ -73,7 +73,7 @@ function vim_plugin_update {
 
 }
 
-function vimrc_update {
+vimrc_update() {
 	MSG="vimrc update"
 	printf "\
 	\n\"NOTE : alias for ctrl = c,ctrl,C alias for enter = cr\
